@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecombokum</title>
+    <link rel="stylesheet" href="ecomweb.css">
+</head>
+<body>
+    <div class="website">
+        <div class="page" id="store-page">
+            <div class="nav">
+                <button onclick="show('cart-page', 'store-page')">Cart</button>
+                <button>Store</button>
+            </div>
+            <div class="main-area">
+                <div id="selection">
+                    <div class="item">
+                        <h1>item 1</h1>
+                        <button onclick="itemtocart()"></button>
+                    </div>
+                    <div class="item">
+                        <h1>item 2</h1>
+                        <button onclick=""></button>
+                    </div>
+                    <div class="item">
+                        <h1>item 3</h1>
+                        <button onclick=""></button>
+                    </div>
+                    <div class="item">
+                        <h1>item 4</h1>
+                        <button onclick=""></button>
+                    </div>
+                    <div class="item">
+                        <h1>item 5</h1>
+                        <button onclick=""></button>
+                    </div>
+                    <div class="item">
+                        <h1>item 6</h1>
+                        <button onclick=""></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page" id="cart-page" style="display: none">
+            <div class="nav">
+                <button>Cart</button>
+                <button onclick="show('store-page', 'cart-page')">Store</button>
+            </div>
+            <div class="main-area">
+                <div id="checkout">
+                    <!-- ad space? -->
+                </div>
+                <form action="ecomweb.php" method="post">
+                    <div id="cart-list">
+                        <table width="100%">
+                            <thead>
+                                <tr>
+                                    <td>Remove</td>
+                                    <td>Image</td>
+                                    <td>Product</td>
+                                    <td>Price</td>
+                                    <td>Quantity</td>
+                                    <td>Total</td>
+                                </tr>
+                            </thead>
+                            <tbody id="shopcart">
+                                <!-- cart-item generate via js -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <input type="submit" value="Submit Order">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="ecomweb.js"></script>
+</body>
+</html>
