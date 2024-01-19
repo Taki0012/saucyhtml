@@ -1,91 +1,75 @@
-// reference the tbody
-let tbody = document.getElementById("shopcart");
-    
-// create  element variables
-let tableRow = document.createElement("tr");
-let cell1 = document.createElement("td");
-let link = document.createElement("a");
-let icon = document.createElement("i");
-let cell2 = document.createElement("td");
-let image = document.createElement("img");
-let cell3 = document.createElement("td");
-let heading = document.createElement("h5");
-let cell4 = document.createElement("td");
-let cell5 = document.createElement("td");
-let input = document.createElement("input");
-let cell6 = document.createElement("td");
-let priceHeading = document.createElement("h5");
-let deleteButton = document.createElement("button");
+function addItem(itemName, itemPrice) {
+    var table = document.getElementById("cart-list").getElementsByTagName('tbody')[0];
 
-// image sources
-let imghoodie1 = "Picture/hoodies/hoodies 1.webp";
+    // Check if the item is already in the table
+    var existingRow = findRowByName(itemName);
+    if (existingRow) {
+        // If item exists, increase the quantity
+        var quantityInput = existingRow.querySelector('input[name="quantity[]"]');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    } else {
+        // If item does not exist, add a new row
+        var newRow = table.insertRow(table.rows.length);
+        var cells = [];
+        for (var i = 0; i < 6; i++) {
+            cells.push(newRow.insertCell(i));
+        }
 
+        cells[0].innerHTML = '<button type="button" class="remove-btn" onclick="removeRow(this)">Remove</button>';
+        cells[1].innerHTML = '<img src="placeholder.jpg" alt="Placeholder">';
+        cells[2].innerHTML = '<input type="text" class="infofield" name="name[]" value="' + itemName + '" readonly>';
+        cells[3].innerHTML = '<input type="number" class="infofield" name="price[]" value="' + itemPrice + '" min="0" step="0.01" readonly>';
+        cells[4].innerHTML = '<input type="number" name="quantity[]" value="1" min="1" max="50">';
+        cells[4].addEventListener("input", function() {
+            updateTotals();
+        });
+        cells[5].innerHTML = '<input type="text" class="infofield" name="total[]" readonly>';
+        
+    }
 
-// adding item to cart function
-function itemtocart() {
-
-    // create the first cell with a delete button
-    deleteButton.textContent = "Delete";
-    deleteButton.className = "delete-button";
-
-    // Add an event listener to the delete button to remove the table row
-    deleteButton.addEventListener("click", function() {
-    // Get the reference to the parent row and remove it
-    let rowToRemove = deleteButton.closest("tr");
-    rowToRemove.remove();
-    });
-
-cell1.appendChild(deleteButton);
-tableRow.appendChild(cell1);
-
-    // create the second cell with an image
-    image.src = imghoodie1; //sets image
-    cell2.appendChild(image);
-    tableRow.appendChild(cell2);
-
-    // create the third cell with a heading
-    heading.innerHTML = "SUNDRIED HOODIE<br>-VIOLET"; //sets text
-    cell3.appendChild(heading);
-    tableRow.appendChild(cell3);
-
-    // create the fourth cell with a price
-    cell4.innerHTML = "₱2999.00"; //sets price
-    tableRow.appendChild(cell4);
-
-    // create the fifth cell with a number input
-    input.className = "quantity";
-    input.value = "1";
-    input.min = "1";  // set the minimum value
-    input.max = "50"; // set the maximum value
-    input.type = "number";
-    cell5.appendChild(input);
-    tableRow.appendChild(cell5);
-
-    // add an event listener to update the total when the input changes
-    input.addEventListener("input", function() {
-        updateTotal();
-    });
-  
-    cell5.appendChild(input);
-    tableRow.appendChild(cell5);
-  
-    // create the sixth cell with a price
-    priceHeading.innerHTML = "₱2999.00";
-    cell6.appendChild(priceHeading);
-    tableRow.appendChild(cell6);
-
-    // append the table row to the tbody
-    tbody.appendChild(tableRow);
+    // Update totals for all rows
+    updateTotals();
 }
 
-// function to update the total based on the quantity input
-function updateTotal() {
-    let quantity = parseInt(input.value); // convert the input value to an integer
-    let unitPrice = 2999.00; // replace with the actual unit price
+function findRowByName(itemName) {
+    var table = document.getElementById("cart-list").getElementsByTagName('tbody')[0];
+    var rows = table.getElementsByTagName('tr');
 
-    // calculate the total and update the content of cell 6
-    let total = quantity * unitPrice;
-    priceHeading.innerHTML = "₱" + total.toFixed(2); // display the total with 2 decimal places
+    for (var i = 0; i < rows.length; i++) {
+        var nameInput = rows[i].querySelector('input[name="name[]"]');
+        if (nameInput && nameInput.value === itemName) {
+            return rows[i];
+        }
+    }
+
+    return null;
+}
+
+function removeRow(btn) {
+    var row = btn.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+
+    // Update totals for all rows after removal
+    updateTotals();
+}
+
+function updateTotals() {
+    var table = document.getElementById("cart-list").getElementsByTagName('tbody')[0];
+    var rows = table.getElementsByTagName('tr');
+
+    for (var i = 0; i < rows.length; i++) {
+        var quantityInput = rows[i].querySelector('input[name="quantity[]"]');
+        var priceInput = rows[i].querySelector('input[name="price[]"]');
+        var totalInput = rows[i].querySelector('input[name="total[]"]');
+
+        if (quantityInput && priceInput && totalInput) {
+            var quantity = parseInt(quantityInput.value);
+            var price = parseFloat(priceInput.value);
+            var total = quantity * price;
+
+            totalInput.value = total.toFixed(2);
+        }
+    }
 }
 
 // show hide function to combine the pages together in one html
