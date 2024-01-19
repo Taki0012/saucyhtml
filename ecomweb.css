@@ -1,5 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
 h1 {
     font-size: 5vh;
+}
+
+h3 {
+    font-size: 3vh;
 }
 
 h5 {
@@ -10,8 +25,25 @@ h5 {
     background-color: aqua;
 }
 
-.nav{
+.nav {
     background-color: aquamarine;
+    margin: 0;
+}
+
+.navbtn {
+    border: none;
+    background-color: aqua;
+    text-align: center;
+    padding: 2vh;
+}
+
+.selrow {
+    display: flex;
+    flex-direction: row;
+}
+
+.item {
+    width: 33%;
 }
 
 table {
@@ -56,3 +88,9 @@ table i {
    color: white;
 }
 
+.infofield {
+    border: none;
+    color: white;
+    background: orangered;
+    font-family: 'Poppins', sans-serif;
+}
