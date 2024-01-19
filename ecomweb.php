@@ -1,20 +1,37 @@
-<!-- process_form.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Form Data</title>
+</head>
+<body>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Access the submitted form data
-  $tableRows = $_POST['tableRows'];
+    // Retrieve the submitted data
+    $names = $_POST["name"];
+    $prices = $_POST["price"];
+    $quantities = $_POST["quantity"];
+    $totals = $_POST["total"];
 
-  // Loop through each table row
-  foreach ($tableRows as $row) {
-    $name = $row['name'];
-    $quantity = $row['quantity'];
-    $price = $row['price'];
-    $total = $row['total'];
+    // Display the received data
+    echo "<h2>Submitted Data:</h2>";
 
-    // Process the data as needed (e.g., store in a database, send an email, etc.)
-    // For demonstration purposes, we'll just print the data
-    echo "Name: $name, Quantity: $quantity, Price: $price, Total: $total<br>";
-  }
+    // Loop through the received data and display each row independently
+    for ($i = 0; $i < count($names); $i++) {
+        echo "<div>";
+        echo "<p><strong>Name:</strong> {$names[$i]}</p>";
+        echo "<p><strong>Price:</strong> {$prices[$i]}</p>";
+        echo "<p><strong>Quantity:</strong> {$quantities[$i]}</p>";
+        echo "<p><strong>Total:</strong> {$totals[$i]}</p>";
+        echo "</div>";
+        echo "<hr>";
+    }
+} else {
+    echo "<p>No data submitted.</p>";
 }
 ?>
+
+</body>
+</html>
